@@ -1,6 +1,19 @@
 version: '3.9'
 
 services:
+  nginx:
+    build: 
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    env_file:
+      - nginx.env
+    volumes:
+      - ANY:/etc/letsencrypt
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+
   web:
     build: 
       context: .
@@ -11,3 +24,6 @@ services:
     expose:
       - 8000
     restart: always
+
+volumes:
+  ANY:
